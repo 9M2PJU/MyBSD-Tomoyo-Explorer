@@ -302,9 +302,9 @@
         <div class="download-card-grid">
           <div class="download-item">
             <div>
-              <h4>Application Bundle <span class="badge">macOS</span></h4>
-              <p>Packaged <code>MyBSD Tomoyo Explorer.app</code> with Apple icon and runtime launcher.</p>
-              <div class="download-cmd">Extract ZIP &rarr; Move to /Applications<br>brew install --cask xquartz</div>
+              <h4>Application Bundle <span class="badge">macOS App</span></h4>
+              <p>Packaged <code>MyBSD Tomoyo Explorer.app</code> with retro Apple icon and runtime environment.</p>
+              <div class="download-cmd">1. Extract MyBSD_Tomoyo_Explorer-macOS.zip<br>2. Drag "MyBSD Tomoyo Explorer.app" to /Applications<br>3. Double-click to launch</div>
             </div>
             <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer-macOS.zip" class="btn-download">
               Download macOS Bundle (1.14 MB)
@@ -313,12 +313,23 @@
 
           <div class="download-item">
             <div>
-              <h4>macOS 1-Liner <span class="badge">Automated</span></h4>
-              <p>Automatically fetches the app bundle and symlinks launcher to <code>~/.local/bin/tomoyo-explorer</code>.</p>
+              <h4>Universal 1-Liner <span class="badge">Terminal</span></h4>
+              <p>Automatically downloads the app bundle, places it in <code>~/Applications/</code>, and symlinks <code>tomoyo-explorer</code> into <code>~/.local/bin/</code>.</p>
               <div class="download-cmd">curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash</div>
             </div>
             <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases" class="btn-download">
               View Release Assets
+            </a>
+          </div>
+
+          <div class="download-item">
+            <div>
+              <h4>XQuartz X11 Display <span class="badge">Prerequisite</span></h4>
+              <p>Since GTK+ 1.2 is an X11 application, macOS requires XQuartz for graphical display. Install via Homebrew:</p>
+              <div class="download-cmd">brew install --cask xquartz</div>
+            </div>
+            <a href="https://www.xquartz.org/" target="_blank" rel="noopener noreferrer" class="btn-download">
+              Visit XQuartz.org
             </a>
           </div>
         </div>
@@ -329,8 +340,19 @@
         <div class="download-card-grid">
           <div class="download-item">
             <div>
-              <h4>Standalone Executable <span class="badge">Windows</span></h4>
-              <p>Native 64-bit Windows launcher compiled with MinGW-w64 with embedded application icon and metadata.</p>
+              <h4>Portable ZIP Package <span class="badge">Recommended</span></h4>
+              <p>Complete standalone Windows distribution containing the executable launcher, themes, configs, and scripts.</p>
+              <div class="download-cmd">1. Download &amp; Extract MyBSD_Tomoyo_Explorer-win64.zip<br>2. Double-click MyBSD_Tomoyo_Explorer.exe</div>
+            </div>
+            <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer-win64.zip" class="btn-download">
+              Download Portable ZIP (476 KB)
+            </a>
+          </div>
+
+          <div class="download-item">
+            <div>
+              <h4>Standalone Launcher (.exe) <span class="badge">Binary</span></h4>
+              <p>Lightweight 64-bit native launcher binary compiled with MinGW-w64 with embedded icon and version resources.</p>
               <div class="download-cmd">MyBSD_Tomoyo_Explorer.exe</div>
             </div>
             <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer.exe" class="btn-download">
@@ -340,23 +362,12 @@
 
           <div class="download-item">
             <div>
-              <h4>Complete Portable ZIP <span class="badge">All-in-One</span></h4>
-              <p>Portable distribution including executable, full asset trees, icon sets, and documentation.</p>
-              <div class="download-cmd">Unzip to folder &rarr; Double-click MyBSD_Tomoyo_Explorer.exe</div>
-            </div>
-            <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer-win64.zip" class="btn-download">
-              Download Portable ZIP (476 KB)
-            </a>
-          </div>
-
-          <div class="download-item">
-            <div>
-              <h4>Windows Subsystem for Linux <span class="badge">WSL2</span></h4>
-              <p>Run directly with hardware graphical acceleration on Windows 10/11 through WSLg.</p>
+              <h4>Windows Subsystem for Linux <span class="badge">WSL2 / WSLg</span></h4>
+              <p>Run seamlessly with full graphical acceleration and native Linux filesystem access on Windows 10/11:</p>
               <div class="download-cmd">wsl curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash</div>
             </div>
             <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer" class="btn-download">
-              View WSL Guide
+              View Repository Guide
             </a>
           </div>
         </div>
