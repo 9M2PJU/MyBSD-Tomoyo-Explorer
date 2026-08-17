@@ -5,21 +5,34 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20FreeBSD-lightgrey?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-BSD--2--Clause-green?style=flat-square)](LICENSE)
 
-**MyBSD Tomoyo Explorer** (originally known as **BSD Explorer**) is a classic BSD/Unix graphical desktop file manager written in Ruby with GTK+ 1.2 and GdkPixbuf. Originally developed in 2002 by **Ariff Abdullah** (*skywizard*) for the **MyBSD** project.
+**MyBSD Tomoyo Explorer** (also known historically as **BSD Explorer**) is a classic BSD/Unix graphical desktop file manager written in Ruby with GTK+ 1.2 and GdkPixbuf. Originally created between 1999 and 2002 by **Ariff Abdullah** (*skywizard*) as part of the **MyBSD Project** (Malaysian *BSD Users Group & Community).
 
 ![MyBSD Tomoyo Explorer](screenshots/mybsd-tomoyo-explorer.png)
 
 ---
 
+## 📜 About the Author & History
+
+### Ariff Abdullah (*skywizard*) & MyBSD
+- **Author:** **Ariff Abdullah** (`skywizard@MyBSD.org.my` / `ariff@FreeBSD.org`)
+- **Original Release:** `v1.00-ALPHA "Yamato Nadeshiko"` (February 26, 2002)
+- **Community:** [MyBSD Project](http://www.MyBSD.org.my) — Malaysia's pioneering BSD Unix advocacy group and developer collective.
+
+Ariff Abdullah (*skywizard*) was an esteemed Malaysian open source developer and official FreeBSD src/ports committer, widely recognized for his substantial contributions to the FreeBSD kernel sound subsystem (`sound(4)` / OSS audio driver architecture) and the Malaysian Unix community.
+
+**Tomoyo Explorer** was created to provide a fast, modular, and lightweight graphical desktop file manager for FreeBSD and Unix workstations using Ruby and GTK+. It features customizable icon sets (WinXP, Windows, KDE2), a dual-pane canvas architecture, mount/filesystem usage indicators, file typing associations, and standalone or client-server execution modes.
+
+---
+
 ## ⚡ 1-Liner Quick Install
 
-Install on **Linux** (x86_64, arm64) or **FreeBSD** with one command:
+Install on **Linux** (x86_64, arm64) or **FreeBSD** with a single command:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash
 ```
 
-This will install `tomoyo-explorer` into `~/.local/bin/` and configure your desktop application menu entry with icons.
+This installs `tomoyo-explorer` into `~/.local/bin/` and registers the desktop application menu launcher with icons.
 
 ---
 
@@ -27,7 +40,7 @@ This will install `tomoyo-explorer` into `~/.local/bin/` and configure your desk
 
 ### 1. Arch Linux (AUR)
 
-Install via your preferred AUR helper:
+Install via your AUR helper of choice:
 
 ```bash
 # Using yay
@@ -48,7 +61,7 @@ makepkg -si
 
 ### 2. Standalone Linux AppImage (x86_64 / amd64)
 
-Download the portable AppImage from [GitHub Releases](../../releases):
+Download the portable AppImage directly from [Releases](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases):
 
 ```bash
 # Download and make executable
@@ -59,23 +72,23 @@ chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
 ./MyBSD_Tomoyo_Explorer-x86_64.AppImage ~/
 ```
 
-> **Note:** The AppImage bundles the complete Ruby 1.8 interpreter, GTK+ 1.2, GdkPixbuf loaders, and compiled `ruby-gtk-fix` C extension. It runs out-of-the-box on modern Linux distributions without any legacy dependencies required on the host system.
+> **Self-Contained:** The AppImage bundles the Ruby runtime, GTK+ 1.2, GdkPixbuf loaders, and native C acceleration modules. It runs out-of-the-box on modern Linux distributions without requiring legacy system libraries.
 
 ---
 
-### 3. FreeBSD Installation
+### 3. FreeBSD Native
 
-On FreeBSD, install dependencies and set up Tomoyo Explorer:
+On FreeBSD systems, install runtime dependencies and run Tomoyo Explorer:
 
 ```bash
 # Install Ruby and GTK 1.2 libraries
 pkg install ruby18 ruby-gtk graphics/ruby-gdk_pixbuf
 
-# Download and run via 1-liner installer
+# Install using 1-liner installer
 curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash
 ```
 
-Or using the included FreeBSD port skeleton:
+Or install via the included FreeBSD port skeleton:
 ```bash
 cd freebsd/
 make install clean
@@ -83,54 +96,21 @@ make install clean
 
 ---
 
-### 4. Docker / Container Environment (amd64 / arm64)
-
-A containerized environment is provided for easy local execution and development:
-
-```bash
-# Build the container image
-docker build -t mybsd-tomoyo-explorer:latest .
-
-# Run with X11 display forwarding
-./run-tomoyo-explorer.sh ~/
-```
-
----
-
-## 🛠️ Building & Packaging
-
-### Building the Linux AppImage
-```bash
-chmod +x build-appimage.sh
-./build-appimage.sh
-```
-The resulting executable AppImage will be placed in `dist/MyBSD_Tomoyo_Explorer-x86_64.AppImage`.
-
----
-
 ## 📂 Repository Contents
 
 | Directory / File | Description |
 | :--- | :--- |
-| [`ruby-BSD-Explorer/`](ruby-BSD-Explorer/) | Tomoyo Explorer `v1.00-ALPHA` ("Yamato Nadeshiko") Ruby source code, C fixes, and icon sets. |
-| [`aur/tomoyo-explorer-bin/`](aur/tomoyo-explorer-bin/) | Official Arch User Repository (AUR) package files (`PKGBUILD`, `.SRCINFO`). |
-| [`freebsd/`](freebsd/) | FreeBSD port `Makefile`, `pkg-descr`, and `pkg-plist`. |
+| [`ruby-BSD-Explorer/`](ruby-BSD-Explorer/) | Tomoyo Explorer `v1.00-ALPHA` ("Yamato Nadeshiko") source code, C fixes, and icon themes. |
+| [`aur/tomoyo-explorer-bin/`](aur/tomoyo-explorer-bin/) | Official Arch User Repository (AUR) package source. |
+| [`freebsd/`](freebsd/) | FreeBSD port `Makefile` and package description. |
 | [`gelojoh-current/`](gelojoh-current/) | Historical Gelojoh HTTP/SSL server in Ruby. |
 | [`IPv6/`](IPv6/) | IPv6 test chat server/clients and RFC drafts. |
-| [`Dockerfile`](Dockerfile) | Multi-stage Docker environment for Ruby 1.8 + GTK 1.2. |
-| [`build-appimage.sh`](build-appimage.sh) | Automated standalone AppImage packager. |
-| [`install.sh`](install.sh) | Universal 1-liner install script. |
+| [`install.sh`](install.sh) | Universal 1-liner installer for Linux and FreeBSD. |
 
 ---
 
-## 📜 Credits & Attribution
+## 📄 License & Attribution
 
-- **Original Author:** Ariff Abdullah a.k.a. *skywizard* (`skywizard@MyBSD.org.my`) and the MyBSD Project Team.
-- **Original Release:** `1.00-ALPHA` ("Yamato Nadeshiko", 2002-02-26).
-- **Maintenance & Modern Packaging:** [9M2PJU](https://github.com/9M2PJU).
-
----
-
-## 📄 License
-
-This project is licensed under the **BSD 2-Clause License**. See the [`LICENSE`](LICENSE) file for details.
+- **Original Creator & Copyright Holder:** © 1999–2002 **Ariff Abdullah** (*skywizard*), MyBSD Project Team.
+- **Repository Maintenance & Modern Packaging:** [9M2PJU](https://github.com/9M2PJU).
+- **License:** Licensed under the **BSD 2-Clause License**. See the [`LICENSE`](LICENSE) file for details.
