@@ -222,7 +222,7 @@
           </div>
           <h3>Zero External Dependencies</h3>
           <p>
-            Pre-packaged Linux AppImage bundles its own isolated Ruby runtime and GTK 1.2 libraries, requiring no installation of deprecated packages on your host.
+            Pre-packaged Linux AppImage bundles its own isolated Ruby runtime and GTK 1.2 libraries, requiring no installation of deprecated packages on your host. CI-built and published automatically via GitHub Actions.
           </p>
         </div>
 
@@ -256,7 +256,6 @@
         <button class="tab-btn" data-tab="macos">macOS (.app)</button>
         <button class="tab-btn" data-tab="windows">Windows (.exe / .zip)</button>
         <button class="tab-btn" data-tab="freebsd">FreeBSD Native</button>
-        <button class="tab-btn" data-tab="docker">Docker Container</button>
       </div>
 
       <!-- Linux Tab -->
@@ -378,8 +377,19 @@
         <div class="download-card-grid">
           <div class="download-item">
             <div>
+              <h4>Universal 1-Liner <span class="badge">Quick</span></h4>
+              <p>Downloads the source tarball, builds the <code>ruby-gtk-fix</code> C extension, and configures binaries, icons, and <code>.desktop</code> launchers in <code>~/.local/</code>.</p>
+              <div class="download-cmd">pkg install ruby18 ruby-gtk graphics/ruby-gdk_pixbuf<br>curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash</div>
+            </div>
+            <a href="https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh" target="_blank" rel="noopener noreferrer" class="btn-download">
+              Inspect install.sh
+            </a>
+          </div>
+
+          <div class="download-item">
+            <div>
               <h4>Native FreeBSD Port <span class="badge">FreeBSD</span></h4>
-              <p>Install natively via FreeBSD ports or packages with Ruby 1.8 and GTK+ 1.2.</p>
+              <p>Install natively via FreeBSD ports with Ruby 1.8 and GTK+ 1.2.</p>
               <div class="download-cmd">pkg install ruby18 ruby-gtk graphics/ruby-gdk_pixbuf<br>cd freebsd &amp;&amp; make install clean</div>
             </div>
             <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/tree/master/freebsd" target="_blank" rel="noopener noreferrer" class="btn-download">
@@ -395,22 +405,6 @@
             </div>
             <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/bsd-explorer-v1.00-ALPHA.tar.gz" class="btn-download">
               Download .tar.gz (394 KB)
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Docker Tab -->
-      <div class="tab-content" id="tab-docker">
-        <div class="download-card-grid">
-          <div class="download-item">
-            <div>
-              <h4>Docker Container <span class="badge">Isolated</span></h4>
-              <p>Isolated Debian container with precompiled Ruby 1.8, GTK 1.2, and GdkPixbuf loaders.</p>
-              <div class="download-cmd">docker build -t mybsd-tomoyo-explorer:latest .<br>./run-tomoyo-explorer.sh ~/</div>
-            </div>
-            <a href="https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/blob/master/Dockerfile" target="_blank" rel="noopener noreferrer" class="btn-download">
-              View Dockerfile
             </a>
           </div>
         </div>

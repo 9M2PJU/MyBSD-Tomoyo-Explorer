@@ -36,6 +36,7 @@ else
 		conftry = sprintf('/usr/local/share/%s-explorer/main.conf', path)
 		if File.file?(conftry)
 			basepath = File.dirname(conftry)
+			break
 		end
 	end
 	basepath ||= File.dirname(__FILE__) if File.file?(File.join(File.dirname(__FILE__), 'main.conf'))

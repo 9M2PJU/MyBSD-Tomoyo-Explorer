@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # MyBSD Tomoyo Explorer Universal 1-Liner Installer
-# Supports: Linux (x86_64, aarch64), Arch Linux (AUR), FreeBSD, and macOS
+# Supports: Linux (x86_64 AppImage), Arch Linux (AUR), FreeBSD, and macOS
 set -euo pipefail
 
 REPO="9M2PJU/MyBSD-Tomoyo-Explorer"
@@ -58,27 +58,10 @@ if [ "${OS}" = "Linux" ]; then
         rm -rf "${TEMP_DIR}"
 
     else
-        echo -e "${BLUE}Detected Linux ${ARCH}.${NC} Setting up Docker / containerized launcher..."
-        if command -v docker >/dev/null 2>&1; then
-            cat << 'EOF' > "${BIN_DIR}/tomoyo-explorer"
-#!/usr/bin/env bash
-xhost +local:root >/dev/null 2>&1 || true
-TARGET_DIR="${1:-$PWD}"
-TARGET_DIR="$(cd "$TARGET_DIR" 2>/dev/null && pwd || echo "$HOME")"
-exec docker run --rm -it \
-  -e "DISPLAY=${DISPLAY:-:0}" \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-  -v "${HOME}:/home/${USER}:rw" \
-  -v "${TARGET_DIR}:/target:rw" \
-  -w "/target" \
-  9m2pju/mybsd-tomoyo-explorer:latest \
-  ruby /usr/local/share/bsd-explorer/explorer_alone "/target"
-EOF
-            chmod +x "${BIN_DIR}/tomoyo-explorer"
-            ln -sf "${BIN_DIR}/tomoyo-explorer" "${BIN_DIR}/bsd-explorer"
-        else
-            echo -e "${RED}Architecture ${ARCH} requires docker or native Ruby 1.8 + GTK 1.2.${NC}" >&2
-        fi
+        echo -e "${RED}Error: No native build is available for Linux ${ARCH}.${NC}" >&2
+        echo -e "${BLUE}The standalone AppImage is only built for x86_64.${NC}" >&2
+        echo -e "${BLUE}Alternatively, install from source on a system with Ruby 1.8 and GTK 1.2.${NC}" >&2
+        exit 1
     fi
 
     # Create Desktop Entry
@@ -97,6 +80,11 @@ EOF
 
 elif [ "${OS}" = "Darwin" ]; then
     echo -e "${GREEN}Detected macOS (${ARCH}).${NC} Installing MyBSD Tomoyo Explorer.app..."
+    if ! command -v unzip >/dev/null 2>&1; then
+        echo -e "${RED}Error: unzip is required but was not found.${NC}" >&2
+        echo -e "${BLUE}Install the Command Line Tools with: xcode-select --install${NC}" >&2
+        exit 1
+    fi
     MAC_APP_DIR="${HOME}/Applications"
     mkdir -p "${MAC_APP_DIR}"
     
@@ -106,6 +94,9 @@ elif [ "${OS}" = "Darwin" ]; then
         curl -fsSL -o "${TEMP_DIR}/macos.zip" "${ZIP_URL}"
     elif command -v wget >/dev/null 2>&1; then
         wget -qO "${TEMP_DIR}/macos.zip" "${ZIP_URL}"
+    else
+        echo -e "${RED}Error: curl or wget required.${NC}" >&2
+        exit 1
     fi
     unzip -qo "${TEMP_DIR}/macos.zip" -d "${MAC_APP_DIR}"
     rm -rf "${TEMP_DIR}"
@@ -148,6 +139,20 @@ EOF
     if [ -f "${INSTALL_DIR}/icons/winxp/mybsd.png" ]; then
         cp "${INSTALL_DIR}/icons/winxp/mybsd.png" "${ICON_DIR}/tomoyo-explorer.png"
     fi
+
+    # Create Desktop Entry
+    cat << 'EOF' > "${APP_DIR}/tomoyo-explorer.desktop"
+[Desktop Entry]
+Name=MyBSD Tomoyo Explorer
+GenericName=File Manager
+Comment=Classic BSD/Unix Ruby GTK 1.2 File Manager
+Exec=tomoyo-explorer %U
+Icon=tomoyo-explorer
+Terminal=false
+Type=Application
+Categories=System;FileManager;Utility;
+StartupNotify=true
+EOF
 fi
 
 # Ensure ~/.local/bin is in PATH notification
@@ -161,4 +166,8 @@ if [[ ":$PATH:" != *":${BIN_DIR}:"* ]]; then
     echo "  export PATH=\"\$HOME/.local/bin:\$PATH\""
     echo ""
 fi
-echo -e "Run with: ${BOLD}tomoyo-explorer ~/${NC} or launch from your Application Menu."
+if [ "${OS}" = "Darwin" ]; then
+    echo -e "Run with: ${BOLD}tomoyo-explorer ~/${NC} or open ${BOLD}MyBSD Tomoyo Explorer.app${NC} from ~/Applications."
+else
+    echo -e "Run with: ${BOLD}tomoyo-explorer ~/${NC} or launch from your Application Menu."
+fi

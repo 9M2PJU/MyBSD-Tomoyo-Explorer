@@ -82,17 +82,8 @@ TARGET_DIR="${1:-$HOME}"
 # If native Ruby GTK is available
 if command -v ruby >/dev/null 2>&1 && ruby -e "require 'gtk'" 2>/dev/null; then
     exec ruby "${SHARE_DIR}/explorer_alone" "${TARGET_DIR}"
-elif command -v docker >/dev/null 2>&1; then
-    xhost +localhost >/dev/null 2>&1 || true
-    exec docker run --rm -it \
-      -e "DISPLAY=host.docker.internal:0" \
-      -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-      -v "${HOME}:/home/user:rw" \
-      -w "/home/user" \
-      9m2pju/mybsd-tomoyo-explorer:latest \
-      ruby /usr/local/share/bsd-explorer/explorer_alone "/home/user"
 else
-    RESP=$(osascript -e 'button returned of (display dialog "MyBSD Tomoyo Explorer\n\nTo run GTK+ 1.2 on macOS, please install XQuartz or Docker:\n\nbrew install --cask xquartz\n\nVisit the project page for details." with title "MyBSD Tomoyo Explorer" buttons {"Cancel", "Open GitHub"} default button "Open GitHub" with icon note)' 2>/dev/null || echo "Cancel")
+    RESP=$(osascript -e 'button returned of (display dialog "MyBSD Tomoyo Explorer\n\nTo run GTK+ 1.2 on macOS, please install XQuartz and a native Ruby with GTK 1.2 support:\n\nbrew install --cask xquartz\n\nVisit the project page for details." with title "MyBSD Tomoyo Explorer" buttons {"Cancel", "Open GitHub"} default button "Open GitHub" with icon note)' 2>/dev/null || echo "Cancel")
     if [ "$RESP" = "Open GitHub" ]; then
         open "https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer"
     fi

@@ -1,6 +1,8 @@
 *.tar.gz
 *.tar.bz2
 *.zip
+# Keep the ruby-gnome source tarball required by the CI AppImage build (Dockerfile)
+!ruby-gnome-all-0.34.tar.gz
 dist/
 build/
 squashfs-root/

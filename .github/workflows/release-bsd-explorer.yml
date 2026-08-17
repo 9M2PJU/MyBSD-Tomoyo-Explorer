@@ -118,7 +118,7 @@ jobs:
           ---
 
           ### Included Artifacts
-          - **`MyBSD_Tomoyo_Explorer-x86_64.AppImage`**: Standalone Linux x86_64 AppImage.
+          - **`MyBSD_Tomoyo_Explorer-x86_64.AppImage`**: Standalone Linux x86_64 AppImage (self-contained Ruby 1.8 + GTK 1.2 runtime, no Docker required).
           - **`MyBSD_Tomoyo_Explorer.exe`** & **`MyBSD_Tomoyo_Explorer-win64.zip`**: Portable Windows executable and package.
           - **`MyBSD_Tomoyo_Explorer-macOS.zip`**: macOS application bundle (`MyBSD Tomoyo Explorer.app`).
           - **Source Archives** (`.tar.gz`, `.tar.bz2`, `.zip`): Complete Ruby source code, C extension source, icon sets, and configs.

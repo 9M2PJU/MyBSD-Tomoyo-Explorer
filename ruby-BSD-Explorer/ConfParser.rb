@@ -220,5 +220,5 @@ def misc_init
 			parser[section].call(l.sub(/^\s*(.+?)\s*$/, '\1').chomp)
 		end
 	end
-	ENV["EXPLORER_DEFAULT_XTERM"] = Reg.registry_data["default_xterm"]
+	ENV["EXPLORER_DEFAULT_XTERM"] = Reg.registry_data["default_xterm"] || ""
 end

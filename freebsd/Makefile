@@ -22,7 +22,11 @@ WRKSRC=		${WRKDIR}/bsd-explorer-v1.00-ALPHA
 do-install:
 	${MKDIR} ${STAGEDIR}${DATADIR}
 	(cd ${WRKSRC} && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR})
-	${INSTALL_SCRIPT} ${WRKSRC}/explorer_alone ${STAGEDIR}${PREFIX}/bin/tomoyo-explorer
+	${MKDIR} ${STAGEDIR}${PREFIX}/bin
+	@${ECHO_CMD} '#!/bin/sh' > ${WRKDIR}/tomoyo-explorer
+	@${ECHO_CMD} 'export EXPLORER_BASE="${DATADIR}"' >> ${WRKDIR}/tomoyo-explorer
+	@${ECHO_CMD} 'exec ruby "${DATADIR}/explorer_alone" "$${1:-$$PWD}"' >> ${WRKDIR}/tomoyo-explorer
+	${INSTALL_SCRIPT} ${WRKDIR}/tomoyo-explorer ${STAGEDIR}${PREFIX}/bin/tomoyo-explorer
 	${LN} -sf tomoyo-explorer ${STAGEDIR}${PREFIX}/bin/bsd-explorer
 
 .include <bsd.port.mk>

@@ -29,19 +29,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     GetExecutableDir(baseDir, sizeof(baseDir));
 
     // Target directory (default: user profile or current dir)
+    targetDir[0] = '\0';
     if (lpCmdLine && lpCmdLine[0] != '\0') {
         // Strip quotes if present
         if (lpCmdLine[0] == '"') {
             strncpy(targetDir, lpCmdLine + 1, sizeof(targetDir) - 1);
+            targetDir[sizeof(targetDir) - 1] = '\0';
             char *quote = strrchr(targetDir, '"');
             if (quote) *quote = '\0';
         } else {
             strncpy(targetDir, lpCmdLine, sizeof(targetDir) - 1);
+            targetDir[sizeof(targetDir) - 1] = '\0';
         }
     } else {
         GetEnvironmentVariableA("USERPROFILE", targetDir, sizeof(targetDir));
         if (targetDir[0] == '\0') {
             strncpy(targetDir, "C:\\", sizeof(targetDir) - 1);
+            targetDir[sizeof(targetDir) - 1] = '\0';
         }
     }
 
@@ -98,8 +102,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         "1. Open PowerShell or Command Prompt\n"
         "2. Run with WSL2:\n"
         "   wsl curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash\n\n"
-        "Would you like to open the GitHub project page for downloads and instructions?",
-        baseDir);
+        "Would you like to open the GitHub project page for downloads and instructions?");
 
     int result = MessageBoxA(NULL, msg, "MyBSD Tomoyo Explorer", MB_YESNO | MB_ICONINFORMATION);
     if (result == IDYES) {

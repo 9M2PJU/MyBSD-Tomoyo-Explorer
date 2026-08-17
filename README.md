@@ -27,7 +27,7 @@ Ariff Abdullah (*skywizard*) was an esteemed Malaysian open source developer and
 
 ## ⚡ 1-Liner Quick Install
 
-Install on **Linux** (x86_64, arm64), **macOS** (Apple Silicon, Intel), or **FreeBSD** with a single command:
+Install on **Linux** (x86_64), **macOS** (Apple Silicon, Intel), or **FreeBSD** with a single command:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash
@@ -74,6 +74,8 @@ chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
 ```
 
 > **Self-Contained:** The AppImage bundles the Ruby runtime, GTK+ 1.2, GdkPixbuf loaders, and native C acceleration modules. It runs out-of-the-box on modern Linux distributions without requiring legacy system libraries.
+>
+> **CI-Built:** The AppImage is built automatically by GitHub Actions on every release tag. Users just download and run - no local build tools required.
 
 ---
 
@@ -138,6 +140,7 @@ make install clean
 | [`aur/tomoyo-explorer-bin/`](aur/tomoyo-explorer-bin/) | Official Arch User Repository (AUR) package source. |
 | [`freebsd/`](freebsd/) | FreeBSD port `Makefile` and package description. |
 | [`install.sh`](install.sh) | Universal 1-liner installer for Linux, macOS, and FreeBSD. |
+| [`Dockerfile`](Dockerfile) + [`build-appimage.sh`](build-appimage.sh) | CI build inputs for the Linux AppImage (legacy Debian etch + Ruby 1.8 + GTK 1.2). Not needed by end users. |
 | [`docs/`](docs/) | GitHub Pages website source ([tomoyo.hamradio.my](https://tomoyo.hamradio.my)). |
 
 ---

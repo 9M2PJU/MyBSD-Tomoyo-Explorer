@@ -1,3 +1,8 @@
+# Build-only Dockerfile for MyBSD Tomoyo Explorer AppImage CI build.
+# This image is NOT published and is NOT meant for end users. It exists solely
+# to provide a legacy Debian etch environment with Ruby 1.8 + GTK 1.2 so that
+# build-appimage.sh can extract the bundled runtime into the AppImage.
+# Users run the finished AppImage directly - no Docker required on their side.
 FROM debian/eol:etch
 
 RUN echo 'deb [trusted=yes] http://archive.debian.org/debian/ etch main' > /etc/apt/sources.list && \
