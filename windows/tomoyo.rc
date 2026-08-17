@@ -1,0 +1,25 @@
+id ICON "tomoyo.ico"
+
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "MyBSD Project"
+      VALUE "FileDescription", "MyBSD Tomoyo Explorer"
+      VALUE "FileVersion", "1.0.0.0"
+      VALUE "InternalName", "tomoyo_explorer"
+      VALUE "LegalCopyright", "Copyright (c) 1999-2002 Ariff Abdullah (skywizard), MyBSD Project"
+      VALUE "OriginalFilename", "MyBSD_Tomoyo_Explorer.exe"
+      VALUE "ProductName", "MyBSD Tomoyo Explorer"
+      VALUE "ProductVersion", "1.00-ALPHA"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1252
+  END
+END

@@ -25,6 +25,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Windows Cross-Compilation Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 python3-pil zip
+
       - name: Determine version
         id: get_version
         run: |
@@ -60,6 +65,11 @@ jobs:
           chmod +x build-appimage.sh
           ./build-appimage.sh
 
+      - name: Build Windows Executable & Distribution Package
+        run: |
+          chmod +x windows/build-windows.sh
+          ./windows/build-windows.sh
+
       - name: Generate Checksums
         run: |
           cd dist
@@ -81,15 +91,25 @@ jobs:
           - **Original Release Date:** 2002-02-26
           - **Language & Toolkit:** Ruby (1.6/1.8 era), GTK+ 1.2, GdkPixbuf
 
-          ### Standalone Linux AppImage (No installation required)
+          ---
+
+          ### Standalone Linux AppImage
           Download `MyBSD_Tomoyo_Explorer-x86_64.AppImage`, make it executable, and run:
           ```bash
           chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
           ./MyBSD_Tomoyo_Explorer-x86_64.AppImage ~/
           ```
 
+          ---
+
+          ### Windows Package (.exe & .zip)
+          Download `MyBSD_Tomoyo_Explorer-win64.zip` or `MyBSD_Tomoyo_Explorer.exe`.
+
+          ---
+
           ### Included Artifacts
-          - **`MyBSD_Tomoyo_Explorer-x86_64.AppImage`**: Self-contained Linux x86_64 AppImage bundling Ruby 1.8, GTK 1.2, GdkPixbuf, `ruby-gnome`, and `ruby-gtk-fix`.
+          - **`MyBSD_Tomoyo_Explorer-x86_64.AppImage`**: Standalone Linux x86_64 AppImage.
+          - **`MyBSD_Tomoyo_Explorer.exe`** & **`MyBSD_Tomoyo_Explorer-win64.zip`**: Portable Windows executable and package.
           - **Source Archives** (`.tar.gz`, `.tar.bz2`, `.zip`): Complete Ruby source code, C extension source, icon sets, and configs.
           - **`SHA256SUMS`**: SHA256 checksums for all release binaries and tarballs.
           EOF

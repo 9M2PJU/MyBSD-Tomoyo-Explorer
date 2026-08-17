@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/9M2PJU/MyBSD-Tomoyo-Explorer?style=flat-square&color=blue)](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases)
 [![AUR version](https://img.shields.io/aur/version/tomoyo-explorer-bin?style=flat-square&color=orange)](https://aur.archlinux.org/packages/tomoyo-explorer-bin)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20FreeBSD-lightgrey?style=flat-square)](#)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20FreeBSD%20%7C%20Windows-lightgrey?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-BSD--2--Clause-green?style=flat-square)](LICENSE)
 
 **MyBSD Tomoyo Explorer** (also known historically as **BSD Explorer**) is a classic BSD/Unix graphical desktop file manager written in Ruby with GTK+ 1.2 and GdkPixbuf. Originally created between 1999 and 2002 by **Ariff Abdullah** (*skywizard*) as part of the **MyBSD Project** (Malaysian *BSD Users Group & Community).
@@ -76,7 +76,21 @@ chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
 
 ---
 
-### 3. FreeBSD Native
+### 3. Windows (.exe / .zip)
+
+Download the Windows executable and distribution package from [Releases](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases):
+
+- **Standalone Executable:** [`MyBSD_Tomoyo_Explorer.exe`](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer.exe)
+- **Complete ZIP Package:** [`MyBSD_Tomoyo_Explorer-win64.zip`](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer-win64.zip)
+
+> **Windows Subsystem for Linux (WSL2):** On modern Windows 10/11, you can also launch directly with full graphical acceleration via WSL:
+> ```powershell
+> wsl curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash
+> ```
+
+---
+
+### 4. FreeBSD Native
 
 On FreeBSD systems, install runtime dependencies and run Tomoyo Explorer:
 
@@ -101,6 +115,7 @@ make install clean
 | Directory / File | Description |
 | :--- | :--- |
 | [`ruby-BSD-Explorer/`](ruby-BSD-Explorer/) | Tomoyo Explorer `v1.00-ALPHA` ("Yamato Nadeshiko") source code, C fixes, and icon themes. |
+| [`windows/`](windows/) | Windows launcher source (`launcher.c`), resource script (`tomoyo.rc`), and build script. |
 | [`aur/tomoyo-explorer-bin/`](aur/tomoyo-explorer-bin/) | Official Arch User Repository (AUR) package source. |
 | [`freebsd/`](freebsd/) | FreeBSD port `Makefile` and package description. |
 | [`gelojoh-current/`](gelojoh-current/) | Historical Gelojoh HTTP/SSL server in Ruby. |
