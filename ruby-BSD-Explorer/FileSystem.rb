@@ -62,19 +62,32 @@ class FileSystem
 			end
 		end
 		if test(?x, @mount_prog)
-			`#{@mount_prog} -p`.each_line do |l|
-				ary = l.chomp.split("\t")
-				ary.pop
-				dev = ary[0]
-				ary.shift
-				ary[-1] =~ /^([^\s]+)/
-				fs = $1
-				ary.pop
-				mntpt = ary.join("\t")
-				begin
-					stat = File.stat(mntpt)
-					@mount_point.push([dev, mntpt, fs, stat.dev, stat.ino])
-				rescue
+			is_linux = (`/bin/uname`.strip == "Linux" rescue false)
+			mount_cmd = is_linux ? "#{@mount_prog}" : "#{@mount_prog} -p"
+			`#{mount_cmd} 2>/dev/null`.each_line do |l|
+				if is_linux
+					if l =~ /^(\S+)\s+on\s+(\S+)\s+type\s+(\S+)/
+						dev, mntpt, fs = $1, $2, $3
+						begin
+							stat = File.stat(mntpt)
+							@mount_point.push([dev, mntpt, fs, stat.dev, stat.ino])
+						rescue
+						end
+					end
+				else
+					ary = l.chomp.split("\t")
+					ary.pop
+					dev = ary[0]
+					ary.shift
+					ary[-1] =~ /^([^\s]+)/
+					fs = $1
+					ary.pop
+					mntpt = ary.join("\t")
+					begin
+						stat = File.stat(mntpt)
+						@mount_point.push([dev, mntpt, fs, stat.dev, stat.ino])
+					rescue
+					end
 				end
 			end
 		end

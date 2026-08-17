@@ -359,8 +359,11 @@ def setup_main
 	icons_db_init()
 	ftype_db_init()
 	Reg.fscache = FSCache.new() if Reg.registry_data["use_fs_cache"]
-	Reg.fonts = [Gdk::Font.fontset_load(Reg.registry_data["left_info_main_title_font"]),
-		Gdk::Font.fontset_load(Reg.registry_data["left_info_preview_title_font"])]
+	font0 = (Gdk::Font.fontset_load(Reg.registry_data["left_info_main_title_font"]) rescue nil)
+	font0 ||= (Gdk::Font.font_load("fixed") rescue nil)
+	font1 = (Gdk::Font.fontset_load(Reg.registry_data["left_info_preview_title_font"]) rescue nil)
+	font1 ||= (Gdk::Font.font_load("fixed") rescue nil)
+	Reg.fonts = [font0, font1]
 
 	dummy = Gtk::Window.new()
 	dummy.realize
