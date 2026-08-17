@@ -136,6 +136,7 @@ make install clean
 | [`macos/`](macos/) | macOS Application Bundle packaging and `tomoyo.icns` generator. |
 | [`windows/`](windows/) | Windows launcher source (`launcher.c`), resource script (`tomoyo.rc`), and build script. |
 | [`aur/tomoyo-explorer-bin/`](aur/tomoyo-explorer-bin/) | Official Arch User Repository (AUR) package source. |
+| [`freebsd/`](freebsd/) | FreeBSD port `Makefile` and package description. |
 | [`install.sh`](install.sh) | Universal 1-liner installer for Linux, macOS, and FreeBSD. |
 | [`docs/`](docs/) | GitHub Pages website source ([tomoyo.hamradio.my](https://tomoyo.hamradio.my)). |
 
