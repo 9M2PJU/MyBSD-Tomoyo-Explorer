@@ -72,7 +72,11 @@ def icons_db_init
 		end
 	}
 
-	path = icons_db_config['config']['path']+"/"+icons_db_config['config']['theme']
+	icons_path = icons_db_config['config']['path']
+	if (!icons_path || !File.directory?(icons_path)) && File.directory?(File.join(EXPLORER_BASE, 'icons'))
+		icons_path = File.join(EXPLORER_BASE, 'icons')
+	end
+	path = icons_path+"/"+icons_db_config['config']['theme']
 	Reg.core_icons_db = ExplorerIcons.new(
 		path,
 		icons_db_config['config']['type'],

@@ -20,25 +20,35 @@ Contains historical projects from **MyBSD**, featuring **BSD Explorer / Tomoyo E
 
 ---
 
-### Quick Start (Running Locally via Docker)
+### Download & Run (Standalone AppImage)
 
-A complete containerized runtime environment with Ruby 1.8, GTK+ 1.2, GdkPixbuf, and the compiled `ruby-gtk-fix` C extension is provided.
+Download the ready-to-run Linux **x86_64 AppImage** from [Releases](../../releases):
 
 ```bash
-# Build the runtime image
-docker build -t mybsd-tomoyo-explorer:latest .
-
-# Launch Tomoyo Explorer
-./run-tomoyo-explorer.sh
+# Make executable and run
+chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
+./MyBSD_Tomoyo_Explorer-x86_64.AppImage ~/
 ```
 
-Or run via the installed system shortcut:
+*Bundles Ruby 1.8 runtime, GTK+ 1.2, GdkPixbuf, `ruby-gnome 0.34`, and `ruby-gtk-fix` C extension. Runs on any modern Linux distribution without installing dependencies.*
+
+---
+
+### Alternative: Docker Environment & Building AppImage
+
 ```bash
-tomoyo-explorer ~/
+# 1. Build Docker runtime image
+docker build -t mybsd-tomoyo-explorer:latest .
+
+# 2. Run via Docker container
+./run-tomoyo-explorer.sh
+
+# 3. Build standalone AppImage locally
+./build-appimage.sh
 ```
 
 ---
 
 ### Releases & CI/CD
 
-Packaged source distribution bundles (`.tar.gz`, `.tar.bz2`, `.zip`, and `SHA256SUMS`) are built automatically with GitHub Actions and published under [Releases](../../releases).
+Packaged standalone AppImage binaries, source distribution bundles (`.tar.gz`, `.tar.bz2`, `.zip`), and `SHA256SUMS` are built automatically with GitHub Actions and published under [Releases](../../releases).

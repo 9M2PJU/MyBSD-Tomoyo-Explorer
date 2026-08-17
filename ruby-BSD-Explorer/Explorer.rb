@@ -29,11 +29,16 @@
 #
 
 basepath = nil
-%w[tomoyo bsd].each do |path|
-	conftry = sprintf('/usr/local/share/%s-explorer/main.conf', path)
-	if File.file?(conftry)
-		basepath = File.dirname(conftry)
+if ENV["EXPLORER_BASE"] && File.directory?(ENV["EXPLORER_BASE"])
+	basepath = ENV["EXPLORER_BASE"]
+else
+	%w[tomoyo bsd].each do |path|
+		conftry = sprintf('/usr/local/share/%s-explorer/main.conf', path)
+		if File.file?(conftry)
+			basepath = File.dirname(conftry)
+		end
 	end
+	basepath ||= File.dirname(__FILE__) if File.file?(File.join(File.dirname(__FILE__), 'main.conf'))
 end
 raise RuntimeError, 'Where is your /usr/local/share/*-explorer/ ?' \
 	unless basepath && File.directory?(basepath)

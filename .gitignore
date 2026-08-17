@@ -2,5 +2,7 @@
 *.tar.bz2
 *.zip
 dist/
+build/
+squashfs-root/
 *.so
 *.o

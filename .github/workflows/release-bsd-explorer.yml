@@ -53,12 +53,19 @@ jobs:
           tar -cjf "${DIST_DIR}/${PKG_NAME}.tar.bz2" "${PKG_NAME}"
           zip -r "${DIST_DIR}/${PKG_NAME}.zip" "${PKG_NAME}"
 
-          # Generate SHA256 Checksums
-          cd "${DIST_DIR}"
-          sha256sum ${PKG_NAME}.* > SHA256SUMS
-          cd ..
+          rm -rf "${PKG_NAME}"
 
-          ls -la "${DIST_DIR}"
+      - name: Build Standalone Linux AppImage
+        run: |
+          chmod +x build-appimage.sh
+          ./build-appimage.sh
+
+      - name: Generate Checksums
+        run: |
+          cd dist
+          sha256sum * > SHA256SUMS
+          cat SHA256SUMS
+          cd ..
 
       - name: Generate Release Notes
         id: release_notes
@@ -74,17 +81,17 @@ jobs:
           - **Original Release Date:** 2002-02-26
           - **Language & Toolkit:** Ruby (1.6/1.8 era), GTK+ 1.2, GdkPixbuf
 
-          ### Requirements & Execution (Historical)
-          1. Ruby 1.6.x - 1.8.x
-          2. `ruby-gtk` (1.2.x bindings) and `ruby-gdkpixbuf`
-          3. Pre-configured Tomoyo/BSD Explorer data files in `/usr/local/share/bsd-explorer`
-          4. Run standalone mode: `./explorer_alone` or client-server mode: `./explorer_server` & `./explorer_client`
+          ### Standalone Linux AppImage (No installation required)
+          Download `MyBSD_Tomoyo_Explorer-x86_64.AppImage`, make it executable, and run:
+          ```bash
+          chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
+          ./MyBSD_Tomoyo_Explorer-x86_64.AppImage ~/
+          ```
 
           ### Included Artifacts
-          - Complete Ruby source files (`Explorer.rb`, `Canvas.rb`, `ToolBar.rb`, etc.)
-          - C helper extension source (`ruby-gtk-fix/`)
-          - Icon themes (`kde2`, `windows`, `winxp`)
-          - Configuration files (`main.conf`, `icons.conf`, `filetype.conf`, `Gtkrc`)
+          - **`MyBSD_Tomoyo_Explorer-x86_64.AppImage`**: Self-contained Linux x86_64 AppImage bundling Ruby 1.8, GTK 1.2, GdkPixbuf, `ruby-gnome`, and `ruby-gtk-fix`.
+          - **Source Archives** (`.tar.gz`, `.tar.bz2`, `.zip`): Complete Ruby source code, C extension source, icon sets, and configs.
+          - **`SHA256SUMS`**: SHA256 checksums for all release binaries and tarballs.
           EOF
 
       - name: Publish GitHub Release
