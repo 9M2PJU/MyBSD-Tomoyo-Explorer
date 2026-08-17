@@ -27,7 +27,7 @@
 #	$MyBSD$
 #	$FreeBSD$
 #
-$DEBUG = true
+$DEBUG = false
 
 #fork do
 #	Process.setsid()

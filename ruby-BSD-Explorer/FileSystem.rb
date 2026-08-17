@@ -94,7 +94,11 @@ class FileSystem
 	end
 	def is_ufs?(path)
 		ret = true
-		real_path = File.realpath(path)
+		begin
+			real_path = (File.realpath(path) rescue path)
+		rescue
+			real_path = path
+		end
 		@mount_point.each do |mnt|
 			regex_fs = Regexp.new("^#{mnt[1].sub(/\/$/, '')}/")
 			if real_path == mnt[1] || regex_fs =~ real_path

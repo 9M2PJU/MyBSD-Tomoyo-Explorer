@@ -280,14 +280,16 @@ class Explorer
 			end
 			@oldpwd = @pwd
 			@pwd = topath
-			@pwd_realpath = File.realpath(@pwd)
+			@pwd_realpath = (File.realpath(@pwd) rescue @pwd)
 			@canvas.canvas_reinit_pre()
 			@is_ufs = @fs.is_ufs?(@pwd_realpath)
 			@item_pwd = item_seek(@pwd, ".")
-			@item_pwd.ftype.icons.each do |i|
-				@item_pwd.icons << @idb.get(i)
+			if @item_pwd && @item_pwd.ftype && @item_pwd.ftype.icons
+				@item_pwd.ftype.icons.each do |i|
+					@item_pwd.icons << @idb.get(i)
+				end
+				@item_pwd.icons << @idb.get(2) if @item_pwd.lsmode == 0120000
 			end
-			@item_pwd.icons << @idb.get(2) if @item_pwd.lsmode == 0120000
 			@fs.update()
 			@dir_db.clear
 			@scandir_list.clear
@@ -341,24 +343,28 @@ class Explorer
 end
 
 def setup_main
-	Thread.abort_on_exception = true
+	Thread.abort_on_exception = false
 	Reg.uid = Etc.getpwuid.uid
 	Reg.user = Etc.getpwuid.name
 	if Reg.uid == 0 && ENV["USER"] == "toor"
 		Reg.user = "toor"
 	end
-	Reg.home = File.realpath(Etc.getpwnam(Reg.user).dir)
-	Reg.gid = Etc.getpwnam(Reg.user).gid
-	Reg.group = Etc.getgrgid(Reg.gid).name
+	user_home = (Etc.getpwnam(Reg.user).dir rescue ENV["HOME"] || "/")
+	Reg.home = (File.realpath(user_home) rescue user_home)
+	Reg.gid = (Etc.getpwnam(Reg.user).gid rescue Process.gid)
+	Reg.group = (Etc.getgrgid(Reg.gid).name rescue "users")
 	Reg.members = [Reg.group]
-	Etc.group do |group|
-		group.mem.each do |name|
-			Reg.members.push(group.name) if name == Reg.user
+	begin
+		Etc.group do |group|
+			group.mem.each do |name|
+				Reg.members.push(group.name) if name == Reg.user
+			end
 		end
+	rescue
 	end
 	Reg.all_sessions = []
 	Reg.members.uniq!
-	Reg.exe = File.realpath($0)
+	Reg.exe = (File.realpath($0) rescue $0)
 	Reg.fs = FileSystem.new()
 	misc_init()
 	icons_db_init()
