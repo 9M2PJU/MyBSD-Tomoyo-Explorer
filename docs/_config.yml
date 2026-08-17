@@ -1,0 +1,36 @@
+# Jekyll configuration for MyBSD Tomoyo Explorer GitHub Pages
+# Static site - meta/SEO tags are hand-written in index.html (no jekyll-seo-tag
+# to avoid duplicate tag conflicts). This config sets site metadata and keeps
+# static files (robots.txt, sitemap.xml) that Jekyll would otherwise exclude.
+
+title: MyBSD Tomoyo Explorer
+description: >-
+  Classic BSD/Unix graphical desktop file manager written in Ruby with GTK+ 1.2
+  by Ariff Abdullah (skywizard) of the MyBSD Project (1999-2002). Available for
+  Linux, macOS, Windows, and FreeBSD.
+url: https://tomoyo.hamradio.my
+baseurl: ""
+author: Ariff Abdullah (skywizard), 9M2PJU
+lang: en_US
+
+# Keep static files that Jekyll excludes by default
+include:
+  - robots.txt
+  - sitemap.xml
+
+# Disable Jekyll's default pagination and other unneeded features
+plugins: []
+
+# Exclude build artifacts from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# SEO defaults referenced by some crawlers via Jekyll
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: https://tomoyo.hamradio.my/assets/mybsd-tomoyo-explorer.png
