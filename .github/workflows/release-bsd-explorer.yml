@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Windows Cross-Compilation Tools
+      - name: Install Build and Cross-Compilation Tools
         run: |
           sudo apt-get update
           sudo apt-get install -y gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 python3-pil zip
@@ -70,6 +70,11 @@ jobs:
           chmod +x windows/build-windows.sh
           ./windows/build-windows.sh
 
+      - name: Build macOS Application Bundle & Package
+        run: |
+          chmod +x macos/build-macos.sh
+          ./macos/build-macos.sh
+
       - name: Generate Checksums
         run: |
           cd dist
@@ -107,9 +112,15 @@ jobs:
 
           ---
 
+          ### macOS Package (.app & .zip)
+          Download `MyBSD_Tomoyo_Explorer-macOS.zip`, extract `MyBSD Tomoyo Explorer.app` to `/Applications`.
+
+          ---
+
           ### Included Artifacts
           - **`MyBSD_Tomoyo_Explorer-x86_64.AppImage`**: Standalone Linux x86_64 AppImage.
           - **`MyBSD_Tomoyo_Explorer.exe`** & **`MyBSD_Tomoyo_Explorer-win64.zip`**: Portable Windows executable and package.
+          - **`MyBSD_Tomoyo_Explorer-macOS.zip`**: macOS application bundle (`MyBSD Tomoyo Explorer.app`).
           - **Source Archives** (`.tar.gz`, `.tar.bz2`, `.zip`): Complete Ruby source code, C extension source, icon sets, and configs.
           - **`SHA256SUMS`**: SHA256 checksums for all release binaries and tarballs.
           EOF

@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/9M2PJU/MyBSD-Tomoyo-Explorer?style=flat-square&color=blue)](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases)
 [![AUR version](https://img.shields.io/aur/version/tomoyo-explorer-bin?style=flat-square&color=orange)](https://aur.archlinux.org/packages/tomoyo-explorer-bin)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20FreeBSD%20%7C%20Windows-lightgrey?style=flat-square)](#)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20FreeBSD%20%7C%20macOS%20%7C%20Windows-lightgrey?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-BSD--2--Clause-green?style=flat-square)](LICENSE)
 
 **MyBSD Tomoyo Explorer** (also known historically as **BSD Explorer**) is a classic BSD/Unix graphical desktop file manager written in Ruby with GTK+ 1.2 and GdkPixbuf. Originally created between 1999 and 2002 by **Ariff Abdullah** (*skywizard*) as part of the **MyBSD Project** (Malaysian *BSD Users Group & Community).
@@ -26,13 +26,13 @@ Ariff Abdullah (*skywizard*) was an esteemed Malaysian open source developer and
 
 ## ⚡ 1-Liner Quick Install
 
-Install on **Linux** (x86_64, arm64) or **FreeBSD** with a single command:
+Install on **Linux** (x86_64, arm64), **macOS** (Apple Silicon, Intel), or **FreeBSD** with a single command:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash
 ```
 
-This installs `tomoyo-explorer` into `~/.local/bin/` and registers the desktop application menu launcher with icons.
+This installs `tomoyo-explorer` into `~/.local/bin/` and registers the desktop application launcher with icons.
 
 ---
 
@@ -76,7 +76,24 @@ chmod +x MyBSD_Tomoyo_Explorer-x86_64.AppImage
 
 ---
 
-### 3. Windows (.exe / .zip)
+### 3. macOS (.app / Homebrew)
+
+Install on macOS (Apple Silicon & Intel) using the universal 1-liner or download the Application Bundle:
+
+- **1-Liner Install:**
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/9M2PJU/MyBSD-Tomoyo-Explorer/master/install.sh | bash
+  ```
+- **Application Bundle:** Download [`MyBSD_Tomoyo_Explorer-macOS.zip`](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases/download/v1.00-ALPHA/MyBSD_Tomoyo_Explorer-macOS.zip), extract, and move `MyBSD Tomoyo Explorer.app` into `/Applications`.
+
+> **X11 Display Note:** Since GTK+ 1.2 utilizes the X11 display protocol, install **[XQuartz](https://www.xquartz.org/)** via Homebrew if you haven't already:
+> ```bash
+> brew install --cask xquartz
+> ```
+
+---
+
+### 4. Windows (.exe / .zip)
 
 Download the Windows executable and distribution package from [Releases](https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer/releases):
 
@@ -90,7 +107,7 @@ Download the Windows executable and distribution package from [Releases](https:/
 
 ---
 
-### 4. FreeBSD Native
+### 5. FreeBSD Native
 
 On FreeBSD systems, install runtime dependencies and run Tomoyo Explorer:
 
@@ -115,12 +132,13 @@ make install clean
 | Directory / File | Description |
 | :--- | :--- |
 | [`ruby-BSD-Explorer/`](ruby-BSD-Explorer/) | Tomoyo Explorer `v1.00-ALPHA` ("Yamato Nadeshiko") source code, C fixes, and icon themes. |
+| [`macos/`](macos/) | macOS Application Bundle packaging and `tomoyo.icns` generator. |
 | [`windows/`](windows/) | Windows launcher source (`launcher.c`), resource script (`tomoyo.rc`), and build script. |
 | [`aur/tomoyo-explorer-bin/`](aur/tomoyo-explorer-bin/) | Official Arch User Repository (AUR) package source. |
 | [`freebsd/`](freebsd/) | FreeBSD port `Makefile` and package description. |
 | [`gelojoh-current/`](gelojoh-current/) | Historical Gelojoh HTTP/SSL server in Ruby. |
 | [`IPv6/`](IPv6/) | IPv6 test chat server/clients and RFC drafts. |
-| [`install.sh`](install.sh) | Universal 1-liner installer for Linux and FreeBSD. |
+| [`install.sh`](install.sh) | Universal 1-liner installer for Linux, macOS, and FreeBSD. |
 
 ---
 

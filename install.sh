@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # MyBSD Tomoyo Explorer Universal 1-Liner Installer
-# Supports: Linux (x86_64, aarch64), Arch Linux (AUR), and FreeBSD
+# Supports: Linux (x86_64, aarch64), Arch Linux (AUR), FreeBSD, and macOS
 set -euo pipefail
 
 REPO="9M2PJU/MyBSD-Tomoyo-Explorer"
@@ -94,6 +94,30 @@ Type=Application
 Categories=System;FileManager;Utility;
 StartupNotify=true
 EOF
+
+elif [ "${OS}" = "Darwin" ]; then
+    echo -e "${GREEN}Detected macOS (${ARCH}).${NC} Installing MyBSD Tomoyo Explorer.app..."
+    MAC_APP_DIR="${HOME}/Applications"
+    mkdir -p "${MAC_APP_DIR}"
+    
+    ZIP_URL="https://github.com/${REPO}/releases/download/${TAG}/MyBSD_Tomoyo_Explorer-macOS.zip"
+    TEMP_DIR="$(mktemp -d)"
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL -o "${TEMP_DIR}/macos.zip" "${ZIP_URL}"
+    elif command -v wget >/dev/null 2>&1; then
+        wget -qO "${TEMP_DIR}/macos.zip" "${ZIP_URL}"
+    fi
+    unzip -qo "${TEMP_DIR}/macos.zip" -d "${MAC_APP_DIR}"
+    rm -rf "${TEMP_DIR}"
+    
+    ln -sf "${MAC_APP_DIR}/MyBSD Tomoyo Explorer.app/Contents/MacOS/tomoyo-explorer" "${BIN_DIR}/tomoyo-explorer"
+    ln -sf "${BIN_DIR}/tomoyo-explorer" "${BIN_DIR}/bsd-explorer"
+    
+    echo -e "${GREEN}Installed to: ${MAC_APP_DIR}/MyBSD Tomoyo Explorer.app${NC}"
+    if [ ! -d "/Applications/Utilities/XQuartz.app" ] && [ ! -d "/Applications/XQuartz.app" ]; then
+        echo -e "${BLUE}Note: For X11 graphical output on macOS, XQuartz is recommended:${NC}"
+        echo "  brew install --cask xquartz"
+    fi
 
 elif [ "${OS}" = "FreeBSD" ]; then
     echo -e "${GREEN}Detected FreeBSD.${NC} Installing Tomoyo Explorer..."
