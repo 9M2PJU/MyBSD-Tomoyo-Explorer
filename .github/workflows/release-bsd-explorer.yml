@@ -1,0 +1,101 @@
+name: Release MyBSD Tomoyo Explorer
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'bsd-explorer-*'
+      - 'tomoyo-explorer-*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version tag (e.g., v1.00-ALPHA or bsd-explorer-1.00-ALPHA)'
+        required: false
+        default: 'v1.00-ALPHA'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Package and Release BSD Explorer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine version
+        id: get_version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            VERSION="v1.00-ALPHA"
+          fi
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Release version: ${VERSION}"
+
+      - name: Package BSD Explorer Distribution Bundles
+        run: |
+          VERSION="${{ steps.get_version.outputs.VERSION }}"
+          PKG_NAME="bsd-explorer-${VERSION}"
+          DIST_DIR="dist"
+          mkdir -p "${DIST_DIR}" "${PKG_NAME}"
+
+          # Copy project files preserving permissions
+          cp -r ruby-BSD-Explorer/* "${PKG_NAME}/"
+
+          # Create distribution archives
+          tar -czf "${DIST_DIR}/${PKG_NAME}.tar.gz" "${PKG_NAME}"
+          tar -cjf "${DIST_DIR}/${PKG_NAME}.tar.bz2" "${PKG_NAME}"
+          zip -r "${DIST_DIR}/${PKG_NAME}.zip" "${PKG_NAME}"
+
+          # Generate SHA256 Checksums
+          cd "${DIST_DIR}"
+          sha256sum ${PKG_NAME}.* > SHA256SUMS
+          cd ..
+
+          ls -la "${DIST_DIR}"
+
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          cat << 'EOF' > release_notes.md
+          ## MyBSD Tomoyo Explorer (BSD Explorer)
+
+          Historical release archive for **MyBSD Tomoyo Explorer** (BSD Explorer) written in Ruby for BSD/Unix desktop environments.
+
+          ### Project Details
+          - **Version:** `1.00-ALPHA` ("Yamato Nadeshiko")
+          - **Original Author:** Ariff Abdullah a.k.a. *skywizard* (`skywizard@MyBSD.org.my`)
+          - **Original Release Date:** 2002-02-26
+          - **Language & Toolkit:** Ruby (1.6/1.8 era), GTK+ 1.2, GdkPixbuf
+
+          ### Requirements & Execution (Historical)
+          1. Ruby 1.6.x - 1.8.x
+          2. `ruby-gtk` (1.2.x bindings) and `ruby-gdkpixbuf`
+          3. Pre-configured Tomoyo/BSD Explorer data files in `/usr/local/share/bsd-explorer`
+          4. Run standalone mode: `./explorer_alone` or client-server mode: `./explorer_server` & `./explorer_client`
+
+          ### Included Artifacts
+          - Complete Ruby source files (`Explorer.rb`, `Canvas.rb`, `ToolBar.rb`, etc.)
+          - C helper extension source (`ruby-gtk-fix/`)
+          - Icon themes (`kde2`, `windows`, `winxp`)
+          - Configuration files (`main.conf`, `icons.conf`, `filetype.conf`, `Gtkrc`)
+          EOF
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          name: "MyBSD Tomoyo Explorer ${{ steps.get_version.outputs.VERSION }}"
+          body_path: release_notes.md
+          draft: false
+          prerelease: true
+          files: |
+            dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
