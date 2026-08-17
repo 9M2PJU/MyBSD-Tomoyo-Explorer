@@ -1,0 +1,8 @@
+MyBSD Tomoyo Explorer (BSD Explorer) is a classic BSD/Unix graphical
+file manager written in Ruby with GTK+ 1.2 and GdkPixbuf by Ariff Abdullah
+(skywizard@MyBSD.org.my) for the MyBSD project.
+
+Features include dual-pane/canvas view, bookmarking, filesystem mounting
+and usage indicators, file typing, and customizable themes.
+
+WWW: https://github.com/9M2PJU/MyBSD-Tomoyo-Explorer
